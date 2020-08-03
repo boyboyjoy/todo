@@ -1,0 +1,37 @@
+{% extends "Base.html" %}
+{% block title %}
+<h2 align="center">Task</h2>
+{% endblock title %}
+{% block content %}
+<body style="background: {{ color }}">
+<p><a href="{% url 'Board' board.id %}">back</a></p><br>
+<p><a href="{% url 'edit_task' board.id task.id %}">Edit task</a></p><br>
+<p><a href="{% url 'add_tag' board.id task.id %}">Add tag</a></p><br><br><br>
+{% if task.task_status != 'COMPLETED' %}
+<p><a href="{% url 'complete_task' board.id task.id %}">Complete task</a></p><br>
+{% endif %}
+{% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}<br><br>
+<p>Description: {{ task.description }}</p>
+<p>Deadline: {{ task.scheduled_deadline }}</p>
+{% if task.task_status == 'COMPLETED' %}
+<p>Real deadline: {{ task.real_deadline }}</p>
+{% endif %}
+<p>Status: {{ task.task_status }}</p>
+{% if task.file %}
+<p><a href="{% url 'get_task_file' board.id task.id %}">File: {{ task.file }}</a></p>
+{% endif %}
+<p>Board: {{ board.title }}</p>
+{% if task.tag_set.all %}
+<p>Tags: {% for tag in task.tag_set.all %}
+<a href="{% url 'search_tag' tag %}">{{ tag.text }}</a>
+{% endfor %}</p>
+{% endif %}
+<p></p><br><br><br>
+<p><a href="{% url 'replace_task' board.id task.id %}">replace/copy task</a></p><br><br>
+<p><a href="{% url 'delete_task' board.id task.id %}">delete task</a></p>
+</body>
+{% endblock content %}

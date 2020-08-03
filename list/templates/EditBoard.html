@@ -1,0 +1,21 @@
+{% extends "Base.html" %}
+{% block title %}
+<h3 align="center">{{ title_page }}</h3>
+{% endblock title %}
+{% block content %}
+<body style="background: {{ color }}">
+<p><a href="{% url 'Board' pk %}">back</a></p>
+<form action="{% url 'edit_board' pk %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ edit_board_form.as_p }}
+    <input type="submit" value="Change">
+</form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</body>
+{% endblock content %}}

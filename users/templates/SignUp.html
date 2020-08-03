@@ -1,0 +1,19 @@
+{% extends "Base.html" %}
+{% block title %}
+<h2 align="center">Sign Up</h2>
+{% endblock title %}
+{% block content %}
+<form action="{% url 'auth:sign_up' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Sign Up">
+</form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<p><a href="{% url 'auth:login' %}">Login</a></p>
+{% endblock content %}

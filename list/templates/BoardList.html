@@ -1,0 +1,29 @@
+{% extends "Base.html" %}
+{% block title %}
+<h2 align="center">All boards</h2>
+{% endblock title %}
+{% block content %}
+<p align="right"><a href="{% url 'auth:logout' %}">logout</a></p>
+<p><a href="{% url 'create_board' %}">Create board</a></p><br><br>
+{% if board_list %}
+{% for board in board_list %}
+{% if user.is_staff or user.is_moderator %}
+<h3><a href="{% url 'Board' board.id %}">Board: {{ board.title }}
+    (creator = {{board.user_creator.name}})
+</a></h3><br>
+{% else %}
+<h3><a href="{% url 'Board' board.id %}">Board: {{ board.title }}
+</a></h3><br>
+{% endif %}
+{% endfor %}
+{% endif %}
+<br><br><br>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<p><a href="{% url 'get_json' %}">Get json</a></p>
+{% endblock content %}

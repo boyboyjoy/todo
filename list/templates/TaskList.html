@@ -1,0 +1,22 @@
+{% extends "Base.html" %}
+{% block title %}
+<h3 align="center">Board: {{ board.title }}</h3>
+{% endblock title %}
+{% block content %}
+<p><a href="{% url 'main-page' %}">back</a></p><br>
+<p><a href="{% url 'create_task' board.id %}">Create task</a></p><br>
+<p><a href="{% url 'edit_board' board.id %}">Edit board</a></p><br>
+<body style="background: {{ board.color }}">
+{% if task_list %}
+{% if board %}
+{% for task in task_list %}
+<p>Task: <a href="{% url 'detail_task' board.id task.id %}">{{ task.description }}</a></p>
+<p>Status: {{ task.task_status }}</p><br>
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if board %}
+<p><a href="{% url 'delete_board' board.id %}">delete board</a></p>
+{% endif %}
+</body>
+{% endblock content %}

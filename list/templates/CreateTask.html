@@ -1,0 +1,22 @@
+{% extends "Base.html"%}
+{% block title %}
+<h3 align="center">{{ title_page }}</h3>
+{% endblock title %}
+{% block content %}
+<p><a href="{% url 'Board' pk %}">back</a></p>
+<body style="background: {{ color }}">
+<form action="{% url 'create_task' pk %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ create_task_form.as_p }}
+    <label for="scheduled_deadline">Deadline</label>
+    <p><input name="scheduled_deadline" id="scheduled_deadline" type="date"></p>
+    <input type="submit" value="Create">
+</form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock content %}}
